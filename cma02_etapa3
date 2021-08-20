@@ -1,0 +1,304 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <locale.h>
+ 
+struct cadastro
+{
+    char nome[200];
+    int idade[200];
+    char genero[200];
+    float peso[200];
+    float altura[200];
+    char endereco[200];
+    int telefone[200];
+    char data_da_avaliacao[200];
+    char data_de_matricula[200];
+    char vencimento_da_mensalidade[200];
+    float valor_da_mensalidade[200];
+    int vazio,cod;
+ 
+ 
+}log[200];
+//AQUI DECLARO AS FUNÇÕES A SEREM USADAS
+int verifica_pos(void);
+int verifica_cod( int cod );
+int opt;
+void cadastroP(int cod,int pos);
+void list();
+void cadastroPedido();
+void consultaCod (void);
+void excluirCliente (void);
+int main(void){ //INICIO DO MAIN
+ 
+printf("\n=======================================================");
+        printf("\n\t   ACADEMIA CEFET- LEOPOLDINA");
+        printf("\n\t     bem-vindo ao sistema! \n");
+        printf("\n=======================================================");
+ 
+        printf("\n\t       CADASTRO DE ALUNOS ");
+        printf("\n-------------------------------------------------------\n\n");
+    setlocale(LC_ALL,"Portuguese");
+    system("color 02");
+ 
+    int i,Opcao,OpcaoCliente,posicao,retorno;
+    int codaux;
+    do
+    {
+        printf("1 - Cadastrar Novo Cliente\n");
+        printf("2 - Cliente\n");
+        printf("3 - Recarregar o menu\n");
+        printf("4 - Excluir Cliente\n");
+        printf("5 - Sair\n");
+        printf(" Selecione uma opção por favor: ");
+        scanf("%d", &Opcao);
+        getchar();
+        if (Opcao == 1)
+        {
+            printf("Voce selecionou a opção 1 - Cadastrar Novo Cliente\n");
+            posicao=verifica_pos();
+ 
+                if ( posicao != -1 )
+                {
+ 
+                    printf("\nEntre com um código de 1 a 200 para seu cadastro: \n");
+                    scanf("%d",&codaux);fflush(stdin);
+ 
+                    retorno = verifica_cod( codaux );
+ 
+                    if ( retorno == 1 )
+                        cadastroP( codaux, posicao );
+                    else{
+                        printf("\nCódigo ja existente ou inválido pressione enter para voltar ao menu principal\n");
+                        getchar();
+                        system("cls");
+                        main();
+                    }
+ 
+                }
+                else
+                    printf("\nNão e possível realizar mais cadastros!\n");
+ 
+                break;
+ 
+        }
+        else if (Opcao == 2)
+        {
+            system("cls");
+            do{
+            printf("Voce selecionou a opção 2 - Clientes\n\n");
+            printf("1 - Pesquisar cliente por codigo\n");
+            printf("2 - Listar todos os clientes\n");
+            printf("3 - Voltar ao menu principal\n");
+            printf("Selecione uma opção por favor: ");
+            scanf("%d", &OpcaoCliente);
+            getchar();
+                 if(OpcaoCliente == 1){
+                    consultaCod();
+                }
+                else if(OpcaoCliente == 2){
+                    list();
+                }
+                else if(OpcaoCliente == 3){
+                    printf("Voce selecionou voltar ao menu principal, pressione ENTER para continuar");
+                    getchar();
+                    system("cls");
+                }
+                else
+                    printf("Opção Inválida\n\n");
+    }while(OpcaoCliente =!3 || OpcaoCliente > 3 || OpcaoCliente < 0 || OpcaoCliente == 0);
+        }
+        else if (Opcao == 3)
+        {
+            printf("Voce selecionou a opção 3 - Alterar Cliente\n");
+        }
+        else if (Opcao == 4)
+        {
+            printf("Voce selecionou a opção 4 - Excluir Cliente\n");
+            excluirCliente();
+        }
+ 
+        else if (Opcao == 5)
+        {
+            printf("Voce selecionou a opção 5 - Sair\n");
+        }
+        else{
+            printf("Opção inválida, favor pressione enter para voltar ao menu principal");
+            getchar();
+            system("cls");
+        }
+        }    while (Opcao != 5 || Opcao < 5);
+ 
+} // FIM DO MAIN
+void list(){ // Lista os usuarios cadastrados.
+    int i,j;
+    for(i=0;i<200;i++){
+        if(log[i].cod!=NULL){
+            printf("\nCodigo: %d \nNome: %s\nIdade: %s\nGênero: %s\nPeso: %s \nAltura: %s \nEndereço: %s \nTelefone: %s \nData da avalição: %s \nData de matricula: %s \nVencimento da mensalidade: %s Valor da mensalidade: %s \n\n", log[i].cod,log[i].nome,log[i].idade,log[i].genero,log[i].peso,log[i].altura,log[i].endereco,log[i].telefone,log[i].data_da_avaliacao,log[i].data_de_matricula,log[i].vencimento_da_mensalidade,log[i].valor_da_mensalidade);
+    }
+}
+    printf("Pressione enter para volta ao menu principal");
+    getchar();
+    system("cls");
+ 
+} //FIM DO LIST
+void cadastroP(int cod, int pos){ //Cadastro das pessoas
+    int i;
+    do{
+    pos = verifica_pos();
+    log[pos].cod = cod;
+        printf("\nDigite o Nome: ");
+        gets(log[pos].nome);
+        printf("\nDigite a Idade: ");
+        gets(log[pos].idade);
+        printf("\nDigite o Gênero: ");
+        gets(log[pos].genero);
+        printf("\nDigite o Peso: ");
+        gets(log[pos].peso);
+        printf("\nDigite a Altura: ");
+        gets(log[pos].altura);
+        printf("\nDigite o Endereço: ");
+        gets(log[pos].endereco);
+        printf("\nDigite o Telefone: ");
+        gets(log[pos].telefone);
+        printf("\nDigite a Data da Avaliação do Aluno: ");
+        gets(log[pos].data_da_avaliacao);
+        printf("\nDigite Data da Matrícula: ");
+        gets(log[pos].data_de_matricula);
+        printf("\nDigite o Vencimento da mensalidade: ");
+        gets(log[pos].vencimento_da_mensalidade);
+        printf("\nDigite o Valor da mensalidade: ");
+        gets(log[pos].valor_da_mensalidade);
+        log[pos].vazio = 1;
+        opt ==1;
+        getchar();
+    }while(opt==1);
+    system("cls");
+    main();
+ 
+} // FIM DO CADASTRO DE PESSOAS
+int verifica_pos( void ) //VERIFICADOR DA POSIÇÃO
+{
+    int cont = 0;
+ 
+    while ( cont <= 200 )
+    {
+ 
+        if ( log[cont].vazio == 0 )
+            return(cont);
+ 
+        cont++;
+ 
+    }
+ 
+    return(-1);
+ 
+} // FIM DO VERIFICADOR
+int verifica_cod( int cod ) // VERIFICADOR DE CÓDIGO
+{
+    int cont = 0;
+ 
+    while ( cont <= 200 )
+    {
+        if ( log[cont].cod == cod )
+            return(0);
+ 
+        cont++;
+    }
+ 
+    return(1);
+ 
+} // FIM DO VERIFICADOR
+ 
+ 
+void consultaCod (void) // CONSULTAR 1 CADASTRADO QUALQUER VIA CÓDIGO DADO POR USUÁRIO.
+{
+    int cont = 0, cod;
+ 
+    printf("\nEntre com o código\n");
+    scanf("%d",&cod);
+    fflush(stdin);
+    system("cls");
+ 
+    while ( cont <= 200 )
+    {
+ 
+        if (log[cont].cod==cod)
+        {
+            if (log[cont].vazio==1)
+            {
+ 
+                printf("\nCódigo: %d \nNome: %s\nIdade: %s\nGênero: %s\nPeso: %s \nAltura: %s \nEndereço: %s \nTelefone: %s \nData da avalição: %s \nData de matrícula: %s \nVencimento da mensalidade: %s Valor da mensalidade: %s \n\n", log[cont].cod,log[cont].nome,log[cont].idade,log[cont].genero,log[cont].peso,log[cont].altura,log[cont].endereco,log[cont].telefone,log[cont].data_da_avaliacao,log[cont].data_de_matricula,log[cont].vencimento_da_mensalidade,log[cont].valor_da_mensalidade);
+    }
+ 
+ 
+                system ("pause");
+ 
+                system("cls");
+ 
+                break;
+ 
+            }
+        }
+ 
+        cont++;
+ 
+        if ( cont > 200 ){
+            printf("\nCódigo não encontrado, pressione enter para volar ao menu principal\n");
+            getchar();
+            system("cls");
+        }
+ 
+    } // FIM DA FUNÇÃO CONSULTAR
+void excluirCliente(void)  // EXCLUI CLIENTE
+{
+    int cod, cont = 0;
+    char resp;
+    printf("\nEntre com o codigo do registro que deseja excluir: \n");
+    scanf("%d", &cod );
+ 
+    while ( cont <= 200 )
+    {
+ 
+        if ( log[cont].cod == cod )
+        {
+ 
+            if (log[cont].vazio == 1 )
+            {
+                printf("\nCodigo: %d \nNome: %s\nIdade: %s\nGenero: %s\nPeso: %s \nAltura: %s \nEndereco: %s \nTelefone: %s \nData da avalicao: %s \nData de matricula: %s \nVencimento da mensalidade: %s Valor da mensalidade: %s \n\n", log[cont].cod,log[cont].nome,log[cont].idade,log[cont].genero,log[cont].peso,log[cont].altura,log[cont].endereco,log[cont].telefone,log[cont].data_da_avaliacao,log[cont].data_de_matricula,log[cont].vencimento_da_mensalidade,log[cont].valor_da_mensalidade);
+                getchar();
+                printf("\nDeseja realmente exlucir? s/n: ");
+                scanf("%s",&resp);
+ 
+                if ( ( resp == 'S' ) || ( resp == 's' ) )
+                {
+                    log[cont].vazio=0;
+                    log[cont].cod = NULL;
+                    printf("\nExclusao feita com sucesso\n");
+                    break;
+                }
+                else
+                {
+                    if ( ( resp == 'N' ) || ( resp == 'n' ) )
+                    {
+                        printf("Exclusao cancelada!\n");
+                        break;
+                    }
+                }
+ 
+            }
+ 
+        }
+ 
+        cont++;
+ 
+        if ( cont > 200 )
+            printf("\nCodigo nao encontrado\n");
+ 
+    }
+ 
+    system("pause");
+    system("cls");
+ 
+}
